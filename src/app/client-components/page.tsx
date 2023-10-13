@@ -25,7 +25,7 @@ export default function ClientComponents() {
   return (
     <div className='space-y-4'>
       <PageTitle>Client Components</PageTitle>
-      {todos?.map((todo) => (
+      {todos.map((todo) => (
         <div key={todo.id}>
           <p>{todo.text}</p>
         </div>

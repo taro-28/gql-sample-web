@@ -1,3 +1,14 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "prettier",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["eslint-plugin-import", "unused-imports", "@typescript-eslint"],
+  "rules": {
+    "react/jsx-sort-props": "error",
+    "unused-imports/no-unused-imports": "error"
+  }
 }

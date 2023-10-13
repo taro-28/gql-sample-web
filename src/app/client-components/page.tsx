@@ -6,7 +6,8 @@ import { Label } from '@/components/Label'
 import { PageTitle } from '@/components/PageTitle'
 import { gqlFetch } from '@/functions/gqlFetch'
 import { Todo } from '@/types/todo'
-import { FormEventHandler, Fragment, useCallback, useEffect, useState } from 'react'
+import { FormEventHandler, useCallback, useEffect, useState } from 'react'
+import { TodoList } from '../TodoList'
 
 const todosQuery = `query { 
   todos {
@@ -70,16 +71,7 @@ export default function ClientComponents() {
         </Label>
         <Button type='submit'>Create</Button>
       </form>
-      <div className='grid grid-cols-2 gap-2'>
-        <div className='font-semibold'>Text</div>
-        <div className='font-semibold'>UserID</div>
-        {todos.map((todo) => (
-          <Fragment key={todo.id}>
-            <div>{todo.text}</div>
-            <div>{todo.user.name}</div>
-          </Fragment>
-        ))}
-      </div>
+      <TodoList todos={todos} />
     </div>
   )
 }

@@ -1,7 +1,5 @@
-export default function Home() {
-  return (
-    <main className=''>
-      <h1>Graphql Sample</h1>
-    </main>
-  )
+import { PageTitle } from '@/components/PageTitle'
+
+export default async function Home() {
+  return <PageTitle>Home</PageTitle>
 }

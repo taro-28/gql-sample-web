@@ -9,18 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "http-string-parser": "^0.0.6",
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
-    "clsx": "^2.0.0",
+    "@types/http-string-parser": "^0.0.31",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "autoprefixer": "^10",
+    "clsx": "^2.0.0",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
     "eslint-config-prettier": "^9.0.0",

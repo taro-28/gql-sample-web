@@ -1,23 +1,34 @@
 'use client'
 
-import { Button } from '@/components/Button'
-import { Input } from '@/components/Input'
-import { Label } from '@/components/Label'
 import { PageTitle } from '@/components/PageTitle'
 import { gqlFetch } from '@/functions/gqlFetch'
 import { Todo } from '@/types/todo'
 import { FormEventHandler, useCallback, useEffect, useState } from 'react'
+import { useDeferQuery } from '@/hooks/useDeferQuery'
+import { Label } from '@/components/Label'
+import { Input } from '@/components/Input'
+import { Button } from '@/components/Button'
 import { TodoList } from '../TodoList'
 
 const todosQuery = `query { 
   todos {
     id
     text
-    user {
-      id
-      name
+    ... @defer {
+      user {
+        id
+        name
+      }
     }
   }
+}
+`
+
+const deferQuery = `query {
+  ... on Query @defer {
+    slowField
+  }
+  fastField
 }
 `
 
@@ -44,6 +55,8 @@ export default function ClientComponents() {
     gqlFetch({ query: todosQuery }).then(({ data: { todos } }) => setTodos(todos))
   }, [])
 
+  const data = useDeferQuery({ query: deferQuery })
+
   const handleCreateTodo: FormEventHandler<HTMLFormElement> = useCallback(async (e) => {
     e.preventDefault()
     const form = e.target
@@ -59,7 +72,9 @@ export default function ClientComponents() {
 
   return (
     <div className='space-y-4'>
-      <PageTitle>Client Components</PageTitle>
+      <PageTitle>Defer Sample</PageTitle>
+      <div>fastField: {data?.fastField ?? 'Loading...'}</div>
+      <div>slowField: {data?.slowField ?? 'Loading...'}</div>
       <form className='flex space-x-2' onSubmit={handleCreateTodo}>
         <Label>
           Text

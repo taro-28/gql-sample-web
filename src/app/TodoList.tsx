@@ -13,8 +13,8 @@ export const TodoList = ({ todos, className, ...props }: Props) => {
       <div className='font-semibold'>UserID</div>
       {todos.map((todo) => (
         <Fragment key={todo.id}>
-          <div>{todo.text}</div>
-          <div>{todo.user.name}</div>
+          <div>{todo?.text}</div>
+          <div>{todo?.user?.name}</div>
         </Fragment>
       ))}
     </div>

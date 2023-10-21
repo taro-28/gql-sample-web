@@ -4,7 +4,7 @@ import { PageTitle } from '@/components/PageTitle'
 import { gqlFetch } from '@/functions/gqlFetch'
 import { Todo } from '@/types/todo'
 import { FormEventHandler, useCallback, useEffect, useState } from 'react'
-import { useDeferQuery } from '@/hooks/useDeferQuery'
+import { useQuery } from '@/packages/useDeferQuery'
 import { Label } from '@/components/Label'
 import { Input } from '@/components/Input'
 import { Button } from '@/components/Button'
@@ -55,7 +55,7 @@ export default function ClientComponents() {
     gqlFetch({ query: todosQuery }).then(({ data: { todos } }) => setTodos(todos))
   }, [])
 
-  const data = useDeferQuery({ query: deferQuery })
+  const data = useQuery({ query: deferQuery })
 
   const handleCreateTodo: FormEventHandler<HTMLFormElement> = useCallback(async (e) => {
     e.preventDefault()

@@ -7,6 +7,8 @@ const todos = [
   'check about fetch policy in sc',
   'typed document node',
   'create page for props pattern',
+  'useQuery return value',
+  'non defer query',
 ]
 
 export default function Todo() {

@@ -6,6 +6,7 @@ import { Suspense, useEffect, useState } from 'react'
 import gql from 'graphql-tag'
 import { UsersFragment } from './server-components/UserList'
 import { useQuery } from '@/packages/gqlClient/client/useQuery'
+import { Loading } from '@/components/Loading'
 
 const query = gql`
   ${UsersFragment}
@@ -58,7 +59,7 @@ export default function Home() {
             追加
           </button>
         </div>
-        <Suspense fallback={<div>loading... by Suspense</div>}>
+        <Suspense fallback={<Loading />}>
           <UserList />
         </Suspense>
       </div>

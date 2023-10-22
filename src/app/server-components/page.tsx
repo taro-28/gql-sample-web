@@ -3,6 +3,7 @@ import { UserList, UsersFragment } from './UserList'
 import { Suspense } from 'react'
 import { getGqlClient } from '../GqlClient'
 import gql from 'graphql-tag'
+import { Loading } from '@/components/Loading'
 
 const query = gql`
   ${UsersFragment}
@@ -16,11 +17,10 @@ const query = gql`
 
 export default async function ServerComponents() {
   await getGqlClient().deferQuery(query)
-
   return (
     <div className='space-y-4'>
       <PageTitle>Server Components</PageTitle>
-      <Suspense fallback={<div>loading... by Suspense</div>}>
+      <Suspense fallback={<Loading />}>
         <UserList />
       </Suspense>
     </div>

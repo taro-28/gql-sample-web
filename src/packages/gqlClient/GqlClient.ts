@@ -7,7 +7,7 @@ import {
 import parser from 'http-string-parser'
 
 export type Value = Record<string, unknown>
-type CacheValue = Promise<Value> | Value | undefined
+type CacheValue = Promise<Value> | undefined
 
 type Props = {
   url: string

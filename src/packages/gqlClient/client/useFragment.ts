@@ -1,7 +1,7 @@
 'use client'
 import { UsersFragment } from '@/app/server-components/UserList'
-import { useGqlClient } from '@/packages/useGqlClient'
 import { use, useMemo } from 'react'
+import { useGqlClient } from './useGqlClient'
 
 type Returns = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

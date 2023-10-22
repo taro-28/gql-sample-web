@@ -1,11 +1,11 @@
 'use client'
 import { PageTitle } from '@/components/PageTitle'
 import { UserList } from './UserList'
-import { useQuery } from '@/packages/useQuery'
 import { Card } from '@/components/Card'
 import { Suspense, useEffect, useState } from 'react'
 import gql from 'graphql-tag'
 import { UsersFragment } from './server-components/UserList'
+import { useQuery } from '@/packages/gqlClient/client/useQuery'
 
 const query = gql`
   ${UsersFragment}

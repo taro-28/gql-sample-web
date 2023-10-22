@@ -11,15 +11,18 @@ type CacheValue = Promise<Value> | Value | undefined
 
 type Props = {
   url: string
+  cachePolicy?: RequestCache
 }
 
 export class GqlClient {
   url: string
+  cachePolicy?: RequestCache
   cache = new Map<string, CacheValue>()
   subscribers = new Set<() => void>()
 
-  constructor({ url }: Props) {
+  constructor({ url, cachePolicy }: Props) {
     this.url = url
+    this.cachePolicy = cachePolicy
   }
 
   private readCache(key: string) {
@@ -60,7 +63,7 @@ export class GqlClient {
     fetch(this.url, {
       method: 'POST',
       mode: 'cors',
-      cache: 'no-cache',
+      cache: this.cachePolicy,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: query.loc?.source.body }),
     }).then(({ body }) => {

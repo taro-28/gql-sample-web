@@ -1,5 +1,5 @@
 'use client'
-import { useFragment } from '@/packages/useFragment'
+import { useFragment } from '@/packages/gqlClient/client/useFragment'
 import clsx from 'clsx'
 import { Fragment } from 'react'
 

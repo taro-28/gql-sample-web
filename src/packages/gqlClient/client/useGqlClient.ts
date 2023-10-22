@@ -1,7 +1,7 @@
 import { GqlClient } from '@/packages/gqlClient/GqlClient'
 import { useCallback, useMemo, useSyncExternalStore } from 'react'
 
-export const client = new GqlClient({
+const client = new GqlClient({
   url: 'http://localhost:3000/graphql',
 })
 

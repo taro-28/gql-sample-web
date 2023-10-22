@@ -1,35 +1,40 @@
 'use client'
 import { PageTitle } from '@/components/PageTitle'
 import { UserList } from './UserList'
-import { useQuery } from '@/packages/useDeferQuery'
+import { useQuery } from '@/packages/useQuery'
 import { Card } from '@/components/Card'
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
+import gql from 'graphql-tag'
+import { UsersFragment } from './server-components/UserList'
 
-const query = `{
-  ... on Query @defer(label : "tasks") {
-    tasks {
-      id
-    }
-  }
-  ... on Query @defer(label: "companies") {
-    companies {
-      name
-    }
-  }
-  ... on Query @defer(label: "users") {
-    users {
-      name
-      email
-      company {
-        name
-        branch
+const query = gql`
+  ${UsersFragment}
+  {
+    ... on Query @defer(label: "tasks") {
+      tasks {
+        id
       }
     }
-  } 
-}`
+    ... on Query @defer(label: "companies") {
+      companies {
+        name
+      }
+    }
+    ...UsersFragment @defer(label: "UsersFragment")
+  }
+`
 
 export default function Home() {
+  const [isClient, setIsClient] = useState(false)
+
   const data = useQuery({ query })
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  if (!isClient) return null
+
   return (
     <div className='w-full space-y-4'>
       <PageTitle>DashBoard</PageTitle>

@@ -1,7 +1,21 @@
 'use client'
 import { useFragment } from '@/packages/gqlClient/client/useFragment'
 import clsx from 'clsx'
+import gql from 'graphql-tag'
 import { Fragment } from 'react'
+
+export const UsersFragment = gql`
+  fragment UsersFragment on Query {
+    users {
+      name
+      email
+      company {
+        name
+        branch
+      }
+    }
+  }
+`
 
 type Props = Omit<JSX.IntrinsicElements['div'], 'children'>
 

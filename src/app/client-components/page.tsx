@@ -1,92 +1,38 @@
 'use client'
-
 import { PageTitle } from '@/components/PageTitle'
-import { gqlFetch } from '@/functions/gqlFetch'
-import { Todo } from '@/types/todo'
-import { FormEventHandler, useCallback, useEffect, useState } from 'react'
-import { useQuery } from '@/packages/useQuery'
-import { Label } from '@/components/Label'
-import { Input } from '@/components/Input'
-import { Button } from '@/components/Button'
-import { TodoList } from '../TodoList'
+import { UserList, UsersFragment } from './UserList'
+import { Suspense, useEffect, useState } from 'react'
+import gql from 'graphql-tag'
+import { useQuery } from '@/packages/gqlClient/client/useQuery'
+import { Loading } from '@/components/Loading'
 
-const todosQuery = `query { 
-  todos {
-    id
-    text
-    ... @defer {
-      user {
-        id
-        name
-      }
-    }
-  }
-}
-`
-
-const deferQuery = `query {
-  ... on Query @defer {
-    slowField
-  }
-  fastField
-}
-`
-
-const createTodoMutation = `mutation ($text: String! $userId: String!) {
-  createTodo(input: {
-    text: $text,
-    userId: $userId
-  }){
-    id
-    text
-    done
-    user {
+const query = gql`
+  ${UsersFragment}
+  {
+    companies {
       id
-      name
     }
+    ...UsersFragment @defer(label: "UsersFragment")
   }
-}
 `
 
-export default function ClientComponents() {
-  const [todos, setTodos] = useState<Todo[]>([])
+export default function ClientComponent() {
+  const [isClient, setIsClient] = useState(false)
+
+  useQuery({ query })
 
   useEffect(() => {
-    gqlFetch({ query: todosQuery }).then(({ data: { todos } }) => setTodos(todos))
+    setIsClient(true)
   }, [])
 
-  const data = useQuery({ query: deferQuery })
-
-  const handleCreateTodo: FormEventHandler<HTMLFormElement> = useCallback(async (e) => {
-    e.preventDefault()
-    const form = e.target
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const formData = new FormData(form)
-    await gqlFetch({
-      query: createTodoMutation,
-      variables: { text: formData.get('text'), userId: formData.get('userId') },
-    }).then(({ data }) => setTodos((prev) => [...prev, data.createTodo]))
-  }, [])
+  if (!isClient) return null
 
   return (
     <div className='space-y-4'>
-      <PageTitle>Defer Sample</PageTitle>
-      <div>fastField: {data?.fastField ?? 'Loading...'}</div>
-      <div>slowField: {data?.slowField ?? 'Loading...'}</div>
-      <form className='flex space-x-2' onSubmit={handleCreateTodo}>
-        <Label>
-          Text
-          <Input className='ml-1' name='text' />
-        </Label>
-        <Label>
-          UserID
-          <Input className='ml-1' name='userId' />
-        </Label>
-        <Button type='submit'>Create</Button>
-      </form>
-      <TodoList todos={todos} />
+      <PageTitle>Client Component</PageTitle>
+      <Suspense fallback={<Loading />}>
+        <UserList />
+      </Suspense>
     </div>
   )
 }

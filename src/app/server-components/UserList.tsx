@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { Fragment } from 'react'
-import { getGqlClient } from '../GqlClient'
+import { getGqlClient } from './GqlClient'
 import gql from 'graphql-tag'
 
 export const UsersFragment = gql`

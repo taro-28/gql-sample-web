@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             ))}
           </ul>
         </nav>
-        <main className='flex justify-center p-4'>{children}</main>
+        <main className='p-4'>{children}</main>
         <footer className='col-span-2 mt-auto border-t-2 p-4 text-center'>React Test Sample</footer>
       </body>
     </html>

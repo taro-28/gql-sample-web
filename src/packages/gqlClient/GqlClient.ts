@@ -18,7 +18,6 @@ export class GqlClient {
   url: string
   cachePolicy?: RequestCache
   cache = new Map<string, CacheValue>()
-  subscribers = new Set<() => void>()
 
   constructor({ url, cachePolicy }: Props) {
     this.url = url
@@ -39,7 +38,6 @@ export class GqlClient {
 
   setCache(key: string, value: CacheValue) {
     this.cache.set(key, value)
-    this.subscribers.forEach((notify) => notify())
   }
 
   async deferQuery(query: DocumentNode) {
@@ -100,12 +98,5 @@ export class GqlClient {
         },
       })
     })
-  }
-
-  subscribe(notify: () => void) {
-    this.subscribers.add(notify)
-  }
-  unsubscribe(notify: () => void) {
-    this.subscribers.delete(notify)
   }
 }

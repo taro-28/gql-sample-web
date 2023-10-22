@@ -1,7 +1,7 @@
 'use client'
 import { use, useMemo } from 'react'
-import { useGqlClient } from './useGqlClient'
 import { DocumentNode } from 'graphql'
+import { gqlClient } from '../../../app/client-components/gqlClient'
 
 type Props = {
   fragment: DocumentNode
@@ -13,8 +13,7 @@ type Returns = {
 }
 
 export const useFragment = ({ fragment }: Props): Returns => {
-  const client = useGqlClient()
-  const fragValue = client.readFragment(fragment)
+  const fragValue = gqlClient.readFragment(fragment)
   return useMemo(
     () => ({ data: fragValue instanceof Promise ? use(fragValue) : fragValue }),
     [fragValue],

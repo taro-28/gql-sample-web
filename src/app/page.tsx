@@ -6,6 +6,7 @@ const todos = [
   'create company detail query',
   'check about fetch policy in sc',
   'typed document node',
+  'create page for props pattern',
 ]
 
 export default function Todo() {

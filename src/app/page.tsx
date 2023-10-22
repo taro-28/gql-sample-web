@@ -8,7 +8,7 @@ const todos = [
   'typed document node',
 ]
 
-export default function Home() {
+export default function Todo() {
   return (
     <div className='w-full space-y-4'>
       <PageTitle>Todo</PageTitle>

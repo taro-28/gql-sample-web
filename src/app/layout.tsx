@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 }
 
 const navItems = [
-  { href: '/', label: 'Home' },
+  { href: '/', label: 'Todo' },
   { href: '/client-components', label: 'Client Components' },
   { href: '/server-components', label: 'Server Components' },
 ] as const

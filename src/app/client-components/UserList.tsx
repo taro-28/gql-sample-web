@@ -20,7 +20,9 @@ export const UsersFragment = gql`
 type Props = Omit<JSX.IntrinsicElements['div'], 'children'>
 
 export const UserList = ({ className, ...props }: Props) => {
-  const { data } = useFragment()
+  const { data } = useFragment({
+    fragment: UsersFragment,
+  })
 
   return (
     <div className={clsx('grid grid-cols-4 gap-2 rounded-md border-2 p-2', className)} {...props}>

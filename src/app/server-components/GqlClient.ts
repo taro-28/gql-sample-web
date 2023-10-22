@@ -1,4 +1,4 @@
-import { GqlClient } from '@/packages/GqlClient'
+import { GqlClient } from '@/packages/gqlClient/GqlClient'
 import { registerGqlClient } from '@/packages/gqlClient/server/registerGqlClient'
 
 export const { getClient: getGqlClient } = registerGqlClient(

@@ -1,5 +1,5 @@
 import { cache } from 'react'
-import { GqlClient } from '../../GqlClient'
+import { GqlClient } from '../GqlClient'
 
 //github.com/apollographql/apollo-client-nextjs/blob/main/package/src/rsc/registerApolloClient.tsx
 export const registerGqlClient = (makeClient: () => GqlClient) => {

@@ -1,4 +1,4 @@
-import { GqlClient } from '@/packages/GqlClient'
+import { GqlClient } from '@/packages/gqlClient/GqlClient'
 import { useCallback, useMemo, useSyncExternalStore } from 'react'
 
 export const client = new GqlClient({

@@ -15,6 +15,6 @@ export const useGqlClient = () => {
     }
   }, [])
 
-  const getCache = useCallback(() => client, [])
-  return useSyncExternalStore(subscribe, getCache, () => client)
+  const getClient = useCallback(() => client, [])
+  return useSyncExternalStore(subscribe, getClient, getClient)
 }

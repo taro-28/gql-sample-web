@@ -8,9 +8,6 @@ import { Loading } from '@/components/Loading'
 const query = gql`
   ${UsersFragment}
   {
-    companies {
-      id
-    }
     ...UsersFragment @defer(label: "UsersFragment")
   }
 `

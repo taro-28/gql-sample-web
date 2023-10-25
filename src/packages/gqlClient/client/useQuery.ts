@@ -10,6 +10,7 @@ type Props = {
 }
 
 export const useQuery = ({ query }: Props) => {
-  use(cachedQuery(query))
-  return useMemo(() => ({ users: undefined }), [])
+  const data = use(cachedQuery(query))
+
+  return useMemo(() => ({ company: data?.company }), [data?.company])
 }

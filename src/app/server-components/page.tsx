@@ -17,10 +17,16 @@ const query = gql`
 `
 
 export default async function ServerComponents() {
-  await getGqlClient().deferQuery(query)
+  const data = await getGqlClient().deferQuery(query)
   return (
     <div className='space-y-4'>
       <PageTitle>Server Component</PageTitle>
+      <div className='space-y-2'>
+        <h2 className='text-xl font-bold'>Company</h2>
+        <p className='text-gray-500'>
+          {data?.company?.name} - {data?.company?.branch}
+        </p>
+      </div>
       <Suspense fallback={<Loading />}>
         <UserList />
       </Suspense>

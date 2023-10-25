@@ -43,14 +43,21 @@ export class GqlClient {
   async deferQuery(query: DocumentNode) {
     const resolves = new Map<string, (data: Value) => void>()
 
-    query.definitions
-      .find(
-        (def): def is OperationDefinitionNode =>
-          def.kind === 'OperationDefinition' && def.operation === 'query',
-      )
-      ?.selectionSet.selections.filter(
-        (sel): sel is FragmentSpreadNode => sel.kind === 'FragmentSpread',
-      )
+    const queryDef = query.definitions.find(
+      (def): def is OperationDefinitionNode =>
+        def.kind === 'OperationDefinition' && def.operation === 'query',
+    )
+
+    if (!queryDef) return
+
+    const queryName = queryDef.name?.value
+    const queryPromise = new Promise<Value>((resolve) => resolves.set('query', resolve))
+    if (queryName) {
+      this.setCache(queryName, queryPromise)
+    }
+
+    queryDef?.selectionSet.selections
+      .filter((sel): sel is FragmentSpreadNode => sel.kind === 'FragmentSpread')
       .forEach((sel) => {
         const name = sel.name.value
         // 各フラグメントのpromiseをcacheにセットする
@@ -91,6 +98,8 @@ export class GqlClient {
                 //   eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const label = queryRes.incremental[0].label
                 resolves.get(label)?.(data)
+              } else {
+                resolves.get('query')?.(data)
               }
               return pump()
             })
@@ -98,5 +107,7 @@ export class GqlClient {
         },
       })
     })
+
+    return queryPromise
   }
 }

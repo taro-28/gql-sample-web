@@ -20,7 +20,7 @@ const query = gql`
 export default function ClientComponent() {
   const [isClient, setIsClient] = useState(false)
 
-  useQuery({ query })
+  const data = useQuery({ query })
 
   useEffect(() => {
     setIsClient(true)
@@ -31,6 +31,12 @@ export default function ClientComponent() {
   return (
     <div className='space-y-4'>
       <PageTitle>Client Component</PageTitle>
+      <div className='space-y-2'>
+        <h2 className='text-xl font-bold'>Company</h2>
+        <p className='text-gray-500'>
+          {data?.company?.name} - {data?.company?.branch}
+        </p>
+      </div>
       <Suspense fallback={<Loading />}>
         <UserList />
       </Suspense>

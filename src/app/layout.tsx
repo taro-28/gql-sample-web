@@ -10,9 +10,17 @@ export const metadata: Metadata = {
 
 const navItems = [
   { href: '/', label: 'Todo' },
-  { href: '/client-components', label: 'Client Components' },
-  { href: '/server-components', label: 'Server Components' },
+  { href: '/props', label: 'Props' },
+  { href: '/promise-cache-defer', label: 'Promise Cache with Defer' },
+  { href: '/promise-cache', label: 'Promise Cache without Defer' },
+  // { href: '/client-components', label: 'Client Components' },
+  // { href: '/server-components', label: 'Server Components' },
 ] as const
+
+const fetchData = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+  return { name: 'taro', age: 26 }
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -42,4 +50,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </body>
     </html>
   )
+}
+
+const Hoge = async () => {
+  const data = await fetchData()
+  return <div>{JSON.stringify(data)}</div>
 }

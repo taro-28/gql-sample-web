@@ -3,7 +3,7 @@ import { DocumentNode } from 'graphql'
 import { cache, use, useMemo } from 'react'
 import { gqlClient } from '@/app/client-components/gqlClient'
 
-const cachedQuery = cache((query: DocumentNode) => gqlClient.deferQuery(query))
+const cachedQuery = cache((query: DocumentNode) => gqlClient.query(query))
 
 type Props = {
   query: DocumentNode
@@ -12,5 +12,5 @@ type Props = {
 export const useQuery = ({ query }: Props) => {
   const data = use(cachedQuery(query))
 
-  return useMemo(() => ({ company: data?.company }), [data?.company])
+  return useMemo(() => ({ user: data?.user }), [data?.company])
 }

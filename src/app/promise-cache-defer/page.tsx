@@ -1,10 +1,9 @@
-'use client'
 import { PageTitle } from '@/components/PageTitle'
-import { UserList, PurchasesFragment } from './UserList'
-import { Suspense, useEffect, useState } from 'react'
 import gql from 'graphql-tag'
-import { useQuery } from '@/packages/gqlClient/client/useQuery'
+import { Suspense } from 'react'
 import { Loading } from '@/components/Loading'
+import { getGqlClient } from '../gqlClient'
+import { Purchases, PurchasesFragment } from './Purchases'
 
 const query = gql`
   ${PurchasesFragment}
@@ -17,28 +16,20 @@ const query = gql`
   }
 `
 
-export default function ClientComponent() {
-  const [isClient, setIsClient] = useState(false)
-
-  const data = useQuery({ query })
-
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
-
-  if (!isClient) return null
-
+export default async function PromiseCacheDeferPage() {
+  const data = await getGqlClient().query(query)
   return (
     <div className='space-y-4'>
-      <PageTitle>Client Component</PageTitle>
+      <PageTitle>Promise Cache with Defer</PageTitle>
       <div className='space-y-2'>
-        <h2 className='text-xl font-bold'>User</h2>
+        <h2 className='text-xl font-bold'>ユーザー情報</h2>
         <p className='text-gray-500'>
           {data?.user?.name} - {data?.user?.email}
         </p>
       </div>
+      <h2 className='text-lg font-bold'>Purchases</h2>
       <Suspense fallback={<Loading />}>
-        <UserList />
+        <Purchases />
       </Suspense>
     </div>
   )

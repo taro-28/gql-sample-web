@@ -5,6 +5,6 @@ export const { getClient: getGqlClient } = registerGqlClient(
   () =>
     new GqlClient({
       url: 'http://localhost:3000/graphql',
-      cachePolicy: 'no-cache',
+      cachePolicy: 'no-store',
     }),
 )
